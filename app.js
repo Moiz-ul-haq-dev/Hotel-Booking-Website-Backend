@@ -6,8 +6,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var blogRouter = require('./routes/createBlog');
-var readBlogRouter = require('./routes/readBlog');
+var signUpRouter = require('./routes/signUp');
+var logInRouter = require('./routes/logIn');
 
 var database = require('./database/sql.js');
 
@@ -29,7 +29,7 @@ app.use(cors());
 
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://full-blog-website.vercel.app');
+  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5173');
   res.setHeader('Access-Control-Allow-Headers', 'Content-type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE' );
   next();
@@ -37,8 +37,8 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/createBlog', blogRouter);
-app.use('/readBlog', readBlogRouter);
+app.use('/signUp', signUpRouter);
+app.use('/logIn', logInRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
