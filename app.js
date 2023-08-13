@@ -8,6 +8,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signUpRouter = require('./routes/signUp');
 var logInRouter = require('./routes/logIn');
+var addEmployeesRouter = require('./routes/addEmployees');
+var getEmployeesRouter = require('./routes/getEmployees');
+var addRoomsRouter = require('./routes/addRooms');
+var getRoomsRouter = require('./routes/getRooms');
 
 var database = require('./database/sql.js');
 
@@ -39,6 +43,10 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signUp', signUpRouter);
 app.use('/logIn', logInRouter);
+app.use('/addEmployees', addEmployeesRouter);
+app.use('/getEmployees', getEmployeesRouter);
+app.use('/addRooms', addRoomsRouter);
+app.use('/getRooms', getRoomsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
