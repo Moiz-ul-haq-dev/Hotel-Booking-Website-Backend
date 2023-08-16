@@ -46,7 +46,7 @@ router.post('/',upload.single('image'), (req, res, next) => {
             }
             console.log('Record inserted successfully');
             // res.status(201).json({ message: 'Employee created successfully' });
-            res.redirect('http://127.0.0.1:5173/dashboard');
+            res.redirect('https://hotelier-site.vercel.app/dashboard');
         });
     } catch (error) {
         console.log(error);

@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
                         currency: 'usd',
                         product_data: {
                             name: data.roomType,
-                            images: [`http://localhost:4000/roomImages/${data.roomImage}`],
+                            images: [`https://sheer-fixed-mask.glitch.me/roomImages/${data.roomImage}`],
                         },
                         unit_amount: data.pricePerDay * 100,
                     },
@@ -51,8 +51,8 @@ router.post('/', (req, res) => {
                 },
             ],
             mode: 'payment',
-            success_url: `http://localhost:4000/success?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: 'http://localhost:4000/cancel',
+            success_url: `https://sheer-fixed-mask.glitch.me/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: 'https://sheer-fixed-mask.glitch.me/cancel',
         });
         return session.url;
     }

@@ -37,7 +37,7 @@ app.use(cors());
 
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5173');
+  res.setHeader('Access-Control-Allow-Origin', 'https://hotelier-site.vercel.app');
   res.setHeader('Access-Control-Allow-Headers', 'Content-type');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE' );
   next();
@@ -63,7 +63,7 @@ app.get('/success', async (req, res) => {
     console.log('Payment was successful',session.metadata.roomNo);
     await Room.updateOne({ roomNo : session.metadata.roomNo }, { $set: { roomAvailability: 'Unavailable' }});
     console.log('Room updated');
-    res.redirect('http://127.0.0.1:5173/paymentDone');
+    res.redirect('https://hotelier-site.vercel.app/paymentDone');
   }else{
     console.log('Payment was not successful');
     res.send('failed');
