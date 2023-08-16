@@ -6,7 +6,6 @@ var logger = require('morgan');
 const { Room } = require('./models/schema.js');
 const stripe = require('stripe')('sk_test_51Nf6L5Id7pugrhpKza2zXC8J6o33gkHwuWPobG3LxWiBqDRdKmHbjLdJKybDN4Zd8Ww0ONXQ4Hsa0UFPHV4VdTaG00LNRYEPLx');
 
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var signUpRouter = require('./routes/signUp');
@@ -58,7 +57,6 @@ app.use('/paymentRoom', paymentRoomRouter);
 
 app.get('/success', async (req, res) => {
   const { session_id } = req.query;
-  // Use the session_id to fetch the session from Stripe
   const session = await stripe.checkout.sessions.retrieve(session_id);
 
   if(session.payment_status === 'paid'){
@@ -70,7 +68,6 @@ app.get('/success', async (req, res) => {
     console.log('Payment was not successful');
     res.send('failed');
   }
-
 });
 
 app.get('/cancel', (req, res) => {
@@ -79,7 +76,6 @@ app.get('/cancel', (req, res) => {
 });
 
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
