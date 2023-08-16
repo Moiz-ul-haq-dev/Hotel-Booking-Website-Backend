@@ -30,7 +30,7 @@ router.post('/',async (req, res, next) => {
         }
         else{
             console.log('Email sent... ');
-            res.redirect('https://hotelier-site.vercel.app/mailSent')
+            // res.redirect('https://hotelier-site.vercel.app/mailSent')
         }
     });
 });
