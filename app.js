@@ -3,6 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const { Room } = require('./models/schema.js');
+const stripe = require('stripe')('sk_test_51Nf6L5Id7pugrhpKza2zXC8J6o33gkHwuWPobG3LxWiBqDRdKmHbjLdJKybDN4Zd8Ww0ONXQ4Hsa0UFPHV4VdTaG00LNRYEPLx');
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -12,6 +15,8 @@ var addEmployeesRouter = require('./routes/addEmployees');
 var getEmployeesRouter = require('./routes/getEmployees');
 var addRoomsRouter = require('./routes/addRooms');
 var getRoomsRouter = require('./routes/getRooms');
+var sendContactMailRouter = require('./routes/sendContactMail');
+var paymentRoomRouter = require('./routes/paymentRoom');
 
 var database = require('./database/sql.js');
 
@@ -47,6 +52,32 @@ app.use('/addEmployees', addEmployeesRouter);
 app.use('/getEmployees', getEmployeesRouter);
 app.use('/addRooms', addRoomsRouter);
 app.use('/getRooms', getRoomsRouter);
+app.use('/sendContactMail', sendContactMailRouter);
+app.use('/paymentRoom', paymentRoomRouter);
+
+
+app.get('/success', async (req, res) => {
+  const { session_id } = req.query;
+  // Use the session_id to fetch the session from Stripe
+  const session = await stripe.checkout.sessions.retrieve(session_id);
+
+  if(session.payment_status === 'paid'){
+    console.log('Payment was successful',session.metadata.roomNo);
+    await Room.updateOne({ roomNo : session.metadata.roomNo }, { $set: { roomAvailability: 'Unavailable' }});
+    console.log('Room updated');
+    res.redirect('http://127.0.0.1:5173/paymentDone');
+  }else{
+    console.log('Payment was not successful');
+    res.send('failed');
+  }
+
+});
+
+app.get('/cancel', (req, res) => {
+  console.log('Payment was not successful');
+  res.send('Payment was not successful');
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

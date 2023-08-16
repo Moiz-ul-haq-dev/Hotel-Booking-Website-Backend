@@ -17,7 +17,7 @@ var storage = multer.diskStorage(
 var upload = multer({storage});
 
 router.post('/',upload.single('roomImage'), (req, res, next) => {
-
+    console.log(req.body.roomNo);
     const data = {
         roomNo: req.body.roomNo,
         roomType: req.body.roomType,
